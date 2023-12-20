@@ -3,8 +3,8 @@
 pragma solidity ^0.8.18;
 
 import {Test, console} from "forge-std/Test.sol";
-import {FundMe} from "../src/FundMe.sol";
-import {DeployFundMe} from "../script/DeployFundMe.s.sol";
+import {FundMe} from "../../src/FundMe.sol";
+import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 
 contract FundMeTest is Test {
     FundMe fundMe;
@@ -26,13 +26,13 @@ contract FundMeTest is Test {
     }
 
     function testOwnerIsMsgSender() public {
-        assertEq(fundMe.getOwner(), address(this));
+        assertEq(fundMe.getOwner(), msg.sender);
     }
 
-    // function testPriceFeedVersionIsAccudate() public {
-    //     uint256 version = fundMe.getVersion();
-    //     assertEq(version, 4);
-    // }
+    function testPriceFeedVersionIsAccudate() public {
+        uint256 version = fundMe.getVersion();
+        assertEq(version, 4);
+    }
 
     function testFundFailWithoutEnoughETH() public {
         vm.expectRevert();
